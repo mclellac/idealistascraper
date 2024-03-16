@@ -10,6 +10,31 @@ from rich.table import Table
 from urllib.parse import urljoin
 import yaml
 
+def banner():
+    print("""
+ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⠔⠉⠒⠤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠺⠤⠔⠁⠀⠀⢀⣀⠀⠀⠀⠑⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡀⢀⡰⠋⠉⠈⠉⠉⠳⠤⠔⢦⡈⢳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢣⡜⠑⠂⠀⠀⠀⠀⠒⠄⠀⠀⣴⠃⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡸⠀⢰⠄⢀⠆⠀⠰⢦⠀⠀⠀⢽⣳⣰⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠔⠋⢹⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠠⣏⠀⠀⠀⠀⠀⠀⠀⠕⢻⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢸⠀⠀⠸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣇⢠⡄⣀⣀⣀⠠⠴⣄⠀⠀⠀⠀⢈⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢀⣀⣠⣧⣀⠘⠢⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⡌⠉⠒⣦⠖⠒⠉⠉⠀⠀⣠⠖⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢮⠀⢀⡀⠀⠙⡆⠘⣦⣤⣀⣀⣀⠀⠀⢀⣀⣀⣙⣦⡀⠀⠀⠀⠀⠀⠠⡾⠓⢦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢸⠉⠉⠉⠉⠚⡅⢀⡟⡄⠀⠈⠉⠉⠉⠉⠀⠀⠀⢸⠉⠳⢶⣤⣀⡤⠖⠁⢀⡞⠀⠈⠓⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠈⡗⠉⠓⠒⠲⡇⢸⢁⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢳⠀⠀⠀⠀⣀⣠⠴⠋⠀⠀⠀⠀⠀⠈⠲⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠙⠶⢖⣒⣺⣵⣣⠊⠀⣀⣀⣀⡠⠤⠔⡿⠀⠀⠀⡞⠀⠀⠀⡞⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠣⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠀⠀⠀⠀⠀⣇⠀⠀⠀⡇⠀⠀⠀⡇⠀⠀⠀⠀⢦⣄⣀⠀⠀⠀⠀⠀⠀⢙⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠃⠀⠀⢸⠇⠀⠀⠀⠀⣿⣿⣿⠛⢲⡄⠀⠀⢀⣼⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⢰⠀⠀⠀⢸⠀⠀⠀⠀⢰⣿⣿⡟⢀⡞⠀⢀⣠⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠦⢄⣈⠀⠀⠀⢸⠀⠀⠀⠀⣼⣿⣿⣇⡎⣠⣴⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡇⠀⠈⠀⠀⠀⠈⠓⠒⠒⠚⠋⠉⢸⡿⢿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣷⢄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣸⡇⠀⠉⡹⠻⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⠀⠈⠉⠛⠒⠒⠒⠒⠚⣿⣿⣿⣿⣷⣀⣀⣙⣢⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠄⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+""")
+
 def euro_to_cad(euro_price: str) -> str:
     conversion_rate = 1.50
     cad_price = float(euro_price.replace('€', '').replace(',', '')) * conversion_rate
@@ -23,7 +48,7 @@ def scrape_idealista(url: str) -> list[dict]:
         }
         all_homes = []
         with Progress() as progress:
-            task = progress.add_task("[green]Scraping...", total=None)
+            task = progress.add_task("[green]Collecting: Please stand by...", total=None)
             current_url = url
             while current_url:
                 response = requests.get(current_url, headers=headers)
@@ -61,6 +86,9 @@ def scrape_idealista(url: str) -> list[dict]:
                 current_url = urljoin(url, next_link['href']) if next_link else None
 
         return all_homes
+    except KeyboardInterrupt:
+            print("\nProgram terminated by user.")
+            exit()
     except requests.exceptions.RequestException as e:
         print("Failed to fetch data:", e)
         return []
@@ -100,18 +128,16 @@ def generate_html(homes: list[dict]):
     os.makedirs("html", exist_ok=True)
     with open("html/index.html", "w") as html_file:
         html_file.write("<!DOCTYPE html>\n<html>\n<head>\n")
-        html_file.write("<style>table {border-collapse: collapse; width: 100%;} th, td {border: 1px solid #ddd; padding: 8px;} th {padding-top: 12px; padding-bottom: 12px; text-align: left; background-color: #f2f2f2; color: black;}</style>\n")
+        html_file.write("<style>table {border-collapse: collapse; width: 100%;} th, td {border: 1px solid #ddd; padding: 8px; color: #333;} th {padding-top: 12px; padding-bottom: 12px; text-align: left; background-color: #f2f2f2; color: black;}</style>\n")
         html_file.write("</head>\n<body>\n")
-        html_file.write("<h1>Homes for Sale in Italy</h1>\n")
+        html_file.write(html_table)
         html_file.write(html_table)
         html_file.write("</body>\n</html>\n")
 
-    print("HTML file generated successfully.")
-
-
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Scrape homes for sale in Italy.")
+    banner()
+    parser = argparse.ArgumentParser(description="Scrape homes from Idealista.")
     parser.add_argument("--generate-html", action="store_true", help="Generate HTML file with results.")
     args = parser.parse_args()
     
@@ -120,16 +146,14 @@ if __name__ == "__main__":
     
     if homes:
         console = Console()
-        
-        console.rule("[bold green]Homes for Sale in Italy[/bold green]")
-        
+                
         table = Table(show_header=True, header_style="bold magenta")
-        table.add_column("No.")
-        table.add_column("Title")
-        table.add_column("Price (Euro)")
-        table.add_column("Price (CAD)")
-        table.add_column("Details")
-        table.add_column("Link")
+        table.add_column("No.", style="cyan")
+        table.add_column("Title", style="green")
+        table.add_column("Price (Euro)", style="yellow")
+        table.add_column("Price (CAD)", style="yellow")
+        table.add_column("Details", style="magenta")
+        table.add_column("Link", style="blue")
         
         for idx, home in enumerate(homes, start=1):
             table.add_row(
@@ -145,4 +169,4 @@ if __name__ == "__main__":
         
         if args.generate_html:
             generate_html(homes)
-            print("HTML file generated successfully.")
+            console.print("HTML file: [magenta]html[/magenta]/[blue]index.html[/blue] generated successfully.", style="bold green")
