@@ -1,0 +1,13 @@
+# Python-specific files
+__pycache__/
+*.pyc
+
+# HTML output directory
+html/
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Environment-specific files
+.env
